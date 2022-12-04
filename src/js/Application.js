@@ -10,7 +10,7 @@ export default class Application extends EventEmitter {
 
   constructor() {
     super();
-
+    this._loading = 0;
     const box = document.createElement("div");
     box.classList.add("box");
     box.innerHTML = this._render({
@@ -43,5 +43,30 @@ export default class Application extends EventEmitter {
   </div>
 </article>
     `;
+  }
+
+  async _load(){
+
+    let url = "https://swapi.boom.dev/api/planets";
+    let promise = fetch(url)
+        .then((response) => response.json());
+
+    return promise;
+  }
+
+  _create(){
+    for (let planet of this.planets) {
+      this._render(planet.name,planet.terrain,planet.population);
+    }
+  }
+
+  _startLoading(){
+    console.log("deeom")
+    this._loading();
+  }
+
+  _stopLoading(){
+
+
   }
 }
