@@ -63,6 +63,7 @@ export default class Application extends EventEmitter {
       await this._load();
     }
 
+    this._stopLoading()
     return data.results;
   }
 
@@ -75,13 +76,12 @@ export default class Application extends EventEmitter {
       main.innerHTML += this._render({name: planet.name, terrain: planet.terrain,
         population: planet.population});
     }
-    this._stopLoading()
   }
 
-  async _startLoading(){
+   _startLoading(){
 
-    let data = await this._load();
-    this._create(data);
+   this._load();
+   this._stopLoading()
   }
 
   _stopLoading(){
