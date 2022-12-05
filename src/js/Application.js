@@ -11,7 +11,7 @@ export default class Application extends EventEmitter {
   constructor() {
     super();
     this._counter = 0;
-    this._loading = HTMLProgressElement;
+    this._loading = document.createElement("PROGRESS");
     const box = document.createElement("div");
     box.classList.add("box");
     box.innerHTML = this._render({
@@ -51,6 +51,7 @@ export default class Application extends EventEmitter {
     let url = this._counter === 0 ?"https://swapi.boom.dev/api/planets":
         "https://swapi.boom.dev/api/planets?page="+this._counter;
 
+    console.log(this._loading)
     const data = await fetch(url)
         .then((response) => response.json());
 
