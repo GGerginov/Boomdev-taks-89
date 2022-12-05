@@ -10,7 +10,8 @@ export default class Application extends EventEmitter {
 
   constructor() {
     super();
-    this._loading = 0;
+    this._counter = 0;
+    this._loading = HTMLProgressElement;
     const box = document.createElement("div");
     box.classList.add("box");
     box.innerHTML = this._render({
@@ -47,9 +48,9 @@ export default class Application extends EventEmitter {
 
   async _load(){
     document.getElementsByClassName("progress")[0].style.display = "block";
+    let url = this._counter === 0 ?"https://swapi.boom.dev/api/planets":
+        "https://swapi.boom.dev/api/planets?page="+this._counter;
 
-    console.log(this._loading)
-    let url = "https://swapi.boom.dev/api/planets?page="+this._loading;
     const data = await fetch(url)
         .then((response) => response.json());
 
@@ -57,7 +58,7 @@ export default class Application extends EventEmitter {
     if (data.next != null) {
       this._create(data.results);
 
-      this._loading++;
+      this._counter++;
       await this._load();
     }
 
